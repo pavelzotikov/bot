@@ -4,7 +4,7 @@ namespace Bot;
 
 class Handler
 {
-    /** @var \Memcache */
+    /** @var \Memcached */
     protected $cache;
 
     /** @var array */
@@ -90,10 +90,10 @@ class Handler
         return 'Catcher остановлен';
     }
 
-    public function getCacheInstance(): \Memcache
+    public function getCacheInstance(): \Memcached
     {
         if (!$this->cache) {
-            $this->cache = new \Memcache();
+            $this->cache = new \Memcached();
             $this->cache->addServer('localhost', 11211);
         }
 

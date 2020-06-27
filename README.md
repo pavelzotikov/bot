@@ -2,7 +2,7 @@
 > PHP: >=7.1.0 
 
 ### Extension
-> Redis, Memcache, Http, Curl, Json, Mbstring
+> Redis, Memcached, Http, Curl, Json, Mbstring
 
 ### Dependencies
 > Composer

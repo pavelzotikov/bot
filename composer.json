@@ -23,6 +23,6 @@
     "phpunit/phpunit": "^7"
   },
   "autoload": {
-    "psr-0": { "bot": "src/" }
+    "psr-0": { "Bot": "src/" }
   }
 }

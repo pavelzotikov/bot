@@ -55,22 +55,17 @@ class Komitet extends Services
                     $response = $handler->onCatcher($service_name, $chatId, $data);
                 }
 
-                $messages = [];
-                if ($response !== null) {
-                    $messages = $response->getMessages();
-                }
-
-                if (!$messages) {
+                if (!$response) {
                     if (method_exists($handler, 'commandDefault')) {
-                        $messages = $handler->commandDefault($service_name, $chatId);
+                        $response = $handler->commandDefault($service_name, $chatId);
                     }
                 }
 
 
-                if ($messages) {
+                if ($response) {
                     $params = [
+                        'text' => $response,
                         'channelId' => $data['channelId'],
-                        'text' => implode("\n\n", $messages),
                         'idTmp' => rand(1, 1000),
                         'ts' => number_format((float) $data['dtCreated'] + .001, 3, '.', ''),
                     ];

@@ -7,6 +7,7 @@ namespace Bot\Services;
 use Bot\Handler;
 use Bot\Services;
 use http\Client;
+use http\QueryString;
 
 class Komitet extends Services
 {
@@ -93,7 +94,9 @@ class Komitet extends Services
         $request = new Client\Request('POST', 'http://v.api.vc.osnova.io/v1.9/m/send', $headers);
 
         $request->addBody(
-            $request->getBody()->addForm($params)
+            $request->getBody()->append(
+                (new QueryString($params))->toString()
+            )
         );
 
         $client = new Client();

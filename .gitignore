@@ -1,0 +1,5 @@
+vendor/*
+php_errors.log
+.idea/*
+.DS_Store
+._*

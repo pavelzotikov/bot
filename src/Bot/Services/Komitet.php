@@ -85,13 +85,15 @@ class Komitet extends Services
     {
         $sendMessageResponse = null;
 
+        [$domain, $xDeviceToken] = explode(':', $this->token);
+
         $headers = [
             'User-Agent' => 'Bot. Library: pavelzotikov/bot',
             'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
-            'x-device-token' => $this->token,
+            'x-device-token' => $xDeviceToken,
         ];
 
-        $request = new Client\Request('POST', 'http://v.api.vc.osnova.io/v1.9/m/send', $headers);
+        $request = new Client\Request('POST', sprintf('https://%s/v1.9/m/send', $domain), $headers);
 
         $request->addBody(
             $request->getBody()->append(

@@ -53,31 +53,35 @@ class Settings
 
     public function save(): void
     {
-        $key = $this->getKeyStorage();
+        $keyStorage = $this->getKeyStorage();
 
         $data = [];
-        if ($this->redis->exists($key)) {
-            $data = $this->redis->get($key);
+        if ($this->redis->exists($keyStorage)) {
+            $data = $this->redis->get($keyStorage);
+
+            if ($data) {
+                $data = json_decode($data, true);
+            }
         }
 
         foreach ($this->updateProperties as $key => $value) {
             $data[$key] = $value;
         }
 
-        $this->redis->set($key, $data);
+        $this->redis->set($keyStorage, json_encode($data));
     }
 
     private function getKeyStorage(): string
     {
-        return sprintf('Bot:Settings:%s:%s', $this->serviceName, $this->chatId);
+        return md5(sprintf('Bot:Settings:%s:%s', $this->serviceName, $this->chatId));
     }
 
     private function fill(): void
     {
-        $key = $this->getKeyStorage();
+        $keyStorage = $this->getKeyStorage();
 
-        if ($this->redis->exists($key)) {
-            $json = json_decode($this->redis->get($key), true);
+        if ($this->redis->exists($keyStorage)) {
+            $json = json_decode($this->redis->get($keyStorage), true);
 
             if ($json) {
                 foreach ($json as $key => $value) {
@@ -94,8 +98,10 @@ class Settings
     public function getRedisInstance(): \Redis
     {
         if (!$this->redis) {
-            $this->redis = new \Redis();
-            $this->redis->connect('localhost', 6379);
+            $redis = new \Redis();
+            $redis->connect('127.0.0.1');
+
+            $this->redis = $redis;
         }
 
         return $this->redis;

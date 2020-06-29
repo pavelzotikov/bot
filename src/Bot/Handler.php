@@ -64,7 +64,7 @@ class Handler
         $method_name = debug_backtrace()[1]['function'];
 
         if ($handler_name && $method_name) {
-            $this->cache->set(sprintf('Bot:Catcher:%s:%s:%s', $handler_name, $service_name, $chat_id), $method_name, 0, $expires_seconds);
+            $this->cache->set(sprintf('Bot:Catcher:%s:%s:%s', $handler_name, $service_name, $chat_id), $method_name, $expires_seconds);
         }
     }
 

@@ -93,18 +93,26 @@ class Komitet extends Services
             'x-device-token' => $xDeviceToken,
         ];
 
-        $request = new Client\Request('POST', sprintf('https://%s/v1.9/m/send', $domain), $headers);
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, sprintf('https://%s/v1.9/m/send', $domain));
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($params));
 
-        $request->addBody(
-            $request->getBody()->append(
-                (new QueryString($params))->toString()
-            )
-        );
+        $response = curl_exec($curl);
 
-        $client = new Client();
-        $client->enqueue($request)->send();
+        if ($response === false || curl_errno($curl)) {
+            return null;
+        }
 
-        return $client->getResponse()->getInfo();
+        if (curl_getinfo($curl, CURLINFO_HTTP_CODE) !== 200) {
+            return null;
+        }
+
+        curl_close($curl);
+
+        return $response;
     }
 
     public function getComparableCommand(Handler $handler, string $command = null)

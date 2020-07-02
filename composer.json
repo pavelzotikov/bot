@@ -16,7 +16,6 @@
     "ext-redis": "*",
     "ext-memcached": "*",
     "ext-mbstring": "*",
-    "ext-http": "*",
     "ext-curl": "*"
   },
   "require-dev": {

@@ -71,7 +71,7 @@ class Komitet extends Services
                         'ts' => number_format((float) $data['dtCreated'] + .001, 3, '.', ''),
                     ];
 
-                    $this->sendMessage($params);
+                    return $this->sendMessage($params);
                 }
 
                 return json_encode($data);
@@ -88,9 +88,9 @@ class Komitet extends Services
         [$domain, $xDeviceToken] = explode(':', $this->token);
 
         $headers = [
-            'User-Agent' => 'Bot. Library: pavelzotikov/bot',
-            'Content-Type' => 'application/x-www-form-urlencoded; charset=utf-8',
-            'x-device-token' => $xDeviceToken,
+            'User-Agent: Bot. Library: pavelzotikov/bot',
+            'Content-Type: application/x-www-form-urlencoded; charset=utf-8',
+            sprintf('X-Device-Token: %s', $xDeviceToken),
         ];
 
         $curl = curl_init();

@@ -100,18 +100,6 @@ class Handler
         return $this->cache;
     }
 
-    public function enabled(string $chat_id, string $service_name): void
-    {
-        $settings = new Settings($chat_id, $service_name);
-        $settings->setIsDisabled(false)->save();
-    }
-
-    public function disabled(string $chat_id, string $service_name): void
-    {
-        $settings = new Settings($chat_id, $service_name);
-        $settings->setIsDisabled(true)->save();
-    }
-
     public function getHandlerName(): string
     {
         return (new \ReflectionClass($this))->getShortName();

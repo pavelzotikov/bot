@@ -6,8 +6,6 @@ namespace Bot\Services;
 
 use Bot\Handler;
 use Bot\Services;
-use http\Client;
-use http\QueryString;
 
 class Komitet extends Services
 {
